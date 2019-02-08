@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ConsoleBlackjack
+namespace BlackjackCore
 {
     public enum Suit
     {
@@ -39,15 +39,6 @@ namespace ConsoleBlackjack
         public int Value { get; set; }
     }
 
-    public class Hand
-    {
-        public List<Card> Cards { get; set; }
-        public int Score()
-        {
-
-        }
-    }
-
     public class Deck
     {
         //private Card[] cards;
@@ -56,13 +47,13 @@ namespace ConsoleBlackjack
 
         public Deck(int size)
         {
-            
+
 
             List<Card> deck = new List<Card>();
-            for(int pack = 0; pack < size; pack++)
+            for (int pack = 0; pack < size; pack++)
                 for (int suit = 0; suit < 4; suit++)
                     for (int face = 1; face < 14; face++)
-                        deck.Add(new Card { Face = (Face)face, Suit = (Suit)suit, Value = (face <= 10) ? face:10 });
+                        deck.Add(new Card { Face = (Face)face, Suit = (Suit)suit, Value = (face <= 10) ? face : 10 });
             //cards = deck.ToArray();
             stack = new Stack<Card>(deck);
 
@@ -91,17 +82,28 @@ namespace ConsoleBlackjack
         static void Main(string[] args)
         {
             deck = new Deck(2);
+            userHand = new List<Card>();
+            dealerHand = new List<Card>();
             deck.Shuffle();
 
             while (deck.Count > 0)
             {
-                var card = deck.Deal();
+                userHand.Add(deck.Deal());
+                userHand.Add(deck.Deal());
 
-                Hand hand = new Hand();
-                hand.Cards.Add(card);
-
-                Console.WriteLine("{0} of {1}", card.Face.ToString(), card.Suit.ToString());
+                Console.WriteLine("{0} of {1}", userHand[0].Face.ToString(), userHand[0].Suit.ToString());
+                Console.WriteLine("{0} of {1}", userHand[1].Face.ToString(), userHand[1].Suit.ToString());
                 Console.ReadLine();
+
+                dealerHand.Add(deck.Deal());
+                dealerHand.Add(deck.Deal());
+
+                Console.WriteLine("{0} of {1}", dealerHand[0].Face.ToString(), dealerHand[0].Suit.ToString());
+                Console.WriteLine("{0} of {1}", dealerHand[1].Face.ToString(), dealerHand[1].Suit.ToString());
+                Console.ReadLine();
+
+
+
             }
         }
 
